@@ -57,7 +57,7 @@ curl http://127.0.0.1:8080
 
 ```bash
 # Arch Linux
-sudo pacman -S nginx-mainline
+sudo pacman -S nginx
 
 # Ubuntu/Debian
 sudo apt install nginx
