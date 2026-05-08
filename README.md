@@ -65,34 +65,40 @@ sudo apt install nginx
 
 ### 配置文件
 
-编辑 `/etc/nginx/nginx.conf`，添加以下配置：
+#### 方式一：直接替换主配置文件
+
+将本项目提供的 `nginx.conf` 文件复制到 `/etc/nginx/nginx.conf`：
+
+```bash
+sudo cp nginx.conf /etc/nginx/nginx.conf
+```
+
+#### 方式二：手动编辑配置文件
+
+编辑 `/etc/nginx/nginx.conf`，在 `http` 块中添加以下 `server` 配置：
 
 ```nginx
-http {
-    # ... 其他配置 ...
+server {
+    listen 80;
+    server_name _;
 
-    server {
-        listen 80;
-        server_name _;
-
-        location / {
-            proxy_pass http://127.0.0.1:8080;
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
-        }
+    location / {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
     }
 }
 ```
 
-### 重启 Nginx
+### 测试配置并重启 Nginx
 
 ```bash
-# Arch Linux
-sudo systemctl restart nginx
+# 测试配置文件语法
+sudo nginx -t
 
-# Ubuntu/Debian
+# 重启 Nginx
 sudo systemctl restart nginx
 ```
 
@@ -103,6 +109,14 @@ sudo systemctl restart nginx
 ```
 Hello World
 ```
+
+## 文件说明
+
+| 文件 | 说明 |
+|------|------|
+| `main.cpp` | C++ HTTP 服务源代码 |
+| `CMakeLists.txt` | CMake 构建配置 |
+| `nginx.conf` | Nginx 配置文件（反向代理） |
 
 ## 技术实现
 
