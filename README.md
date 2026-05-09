@@ -38,7 +38,7 @@ make
 输出示例：
 ```
 ========================================
-C++ HTTP Server started successfully!
+Server started successfully!
 Listening on: http://127.0.0.1:8080
 Press Enter to stop the server...
 ========================================
