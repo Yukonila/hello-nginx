@@ -5,6 +5,8 @@
 
 #define PORT 8080
 
+using namespace std;
+
 // HTTP 请求处理函数
 static enum MHD_Result handle_request(void *cls,
                                        struct MHD_Connection *connection,
@@ -40,7 +42,7 @@ static enum MHD_Result handle_request(void *cls,
 int main() {
     struct MHD_Daemon *daemon;
 
-    // 设置要绑定的地址结构：127.0.0.1（仅本地访问）
+    // 127.0.0.1
     struct sockaddr_in addr4;
     addr4.sin_family = AF_INET;
     addr4.sin_port = htons(PORT);
@@ -52,25 +54,25 @@ int main() {
         PORT,
         NULL, NULL,
         &handle_request, NULL,
-        MHD_OPTION_SOCK_ADDR, &addr4,   // 关键修正点
+        MHD_OPTION_SOCK_ADDR, &addr4,
         MHD_OPTION_END
     );
 
     if (NULL == daemon) {
-        std::cerr << "Failed to start server on port " << PORT << std::endl;
+        cerr << "Failed to start server on port " << PORT << endl;
         return 1;
     }
 
-    std::cout << "========================================" << std::endl;
-    std::cout << "C++ HTTP Server started successfully!" << std::endl;
-    std::cout << "Listening on: http://127.0.0.1:" << PORT << std::endl;
-    std::cout << "Press Enter to stop the server..." << std::endl;
-    std::cout << "========================================" << std::endl;
+    cout << "========================================" << endl;
+    cout << "Server started successfully!" << endl;
+    cout << "Listening on: http://127.0.0.1:" << PORT << endl;
+    cout << "Press Enter to stop the server..." << endl;
+    cout << "========================================" << endl;
 
-    std::cin.get();
+    cin.get();
 
     MHD_stop_daemon(daemon);
-    std::cout << "Server stopped." << std::endl;
+    cout << "Server stopped." << endl;
 
     return 0;
 }
